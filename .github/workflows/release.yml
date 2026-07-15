@@ -34,3 +34,5 @@ jobs:
         run: pnpm --filter @start-x-work/mos-creative publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+# (registered on main)
