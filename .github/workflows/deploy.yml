@@ -23,8 +23,15 @@ jobs:
       - run: pnpm build
       # Use the wrangler pinned in packages/web (avoids wrangler-action's
       # root-level auto-install, which fails in a pnpm workspace).
+      # Create the Pages project on first run; the `|| true` tolerates
+      # subsequent runs where it already exists.
+      - name: Ensure Pages project exists
+        run: pnpm --filter @start-x-work/mos-creative-web exec wrangler pages project create marketing-os-creative --production-branch main || true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy to Cloudflare Pages
-        run: pnpm --filter @start-x-work/mos-creative-web exec wrangler pages deploy dist --project-name=marketing-os-creative
+        run: pnpm --filter @start-x-work/mos-creative-web exec wrangler pages deploy dist --project-name=marketing-os-creative --branch main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
