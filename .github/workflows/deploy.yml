@@ -21,11 +21,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      # Use the wrangler pinned in packages/web (avoids wrangler-action's
+      # root-level auto-install, which fails in a pnpm workspace).
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy packages/web/dist --project-name=marketing-os-creative
-
-# (register dispatch)
+        run: pnpm --filter @start-x-work/mos-creative-web exec wrangler pages deploy dist --project-name=marketing-os-creative
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
