@@ -1,0 +1,18 @@
+# Marketing-OS Creative
+
+> Local-first, BYOK creative-production support OSS for real-world Japanese practice. Drafts copy/articles from a brief, guards expression in place (highlight + points to check, no auto-rewrite), and requires a human approval trail before anything is considered done. No posting, no submission, no scheduling, no telemetry, no backend.
+
+## Scope
+- Does: brief-driven drafting (ad copy, LP hero, SNS post, email, article), expression guard (assertion/guarantee/superlative/stealth-marketing/industry lenses), approval trail (draft → approved → archived), export (Markdown, CSV, Marketing-OS JSON) with the trail embedded.
+- Does not: post/submit/schedule to any external service, auto-approve, auto-rewrite expressions, claim to replace legal review, predict outcomes, or collect telemetry.
+
+## Model of operation
+- BYOK: the user's Gemini API key is stored only in the browser (sessionStorage). The only network destination is the Gemini API.
+- Grounding: numeric claims and results must come from human-entered `grounding.facts`; the tool is designed to suppress fabricated numbers.
+
+## Docs
+- README: https://github.com/start-x-work/mos-creative
+- Manifesto (philosophy & boundary): https://github.com/start-x-work/manifesto
+
+## Commercial
+- AI CMO (ongoing observation) and BPO (production/execution handoff): https://marketing-os.jp

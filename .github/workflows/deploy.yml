@@ -1,0 +1,29 @@
+name: Deploy Web (Cloudflare Pages)
+
+# Deploys packages/web to Cloudflare Pages (marketing-os-creative).
+#
+# GATE: the public site must not go live before D-6/D-7 are recorded.
+# Keep this workflow_dispatch-only (manual) until the gates pass; switch to
+# push:main afterwards if auto-deploy is desired (mirrors the body's habit of
+# Cloudflare Git-integration auto-deploy from main).
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy packages/web/dist --project-name=marketing-os-creative

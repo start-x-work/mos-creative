@@ -1,0 +1,36 @@
+name: Release (npm publish)
+
+# Publishes @start-x-work/mos-creative to npm.
+#
+# GATE: do not tag/dispatch a release until the human gates are recorded —
+# D-6 (industry checklist approval) and D-7 (patent/trademark clearance).
+# See the repo's first-PR audit log and Section X of CR1 v2.0.
+#
+# Trigger: push a tag like v0.1.0, or run manually.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint:forbidden
+      - run: pnpm build
+      - run: pnpm test
+      - name: Publish core to npm
+        run: pnpm --filter @start-x-work/mos-creative publish --no-git-checks --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
