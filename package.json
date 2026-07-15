@@ -1,0 +1,31 @@
+{
+  "name": "@start-x-work/mos-creative-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Local-first, BYOK creative production support OSS — draft-first, human-approved",
+  "license": "Apache-2.0",
+  "author": "Start-X LLC <https://marketing-os.jp>",
+  "homepage": "https://github.com/start-x-work/mos-creative",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/start-x-work/mos-creative.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "vitest run",
+    "test:e2e": "vitest run --dir e2e",
+    "lint": "biome check .",
+    "lint:forbidden": "node scripts/lint-forbidden.mjs",
+    "format": "biome format --write .",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@types/node": "^25.9.1",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
