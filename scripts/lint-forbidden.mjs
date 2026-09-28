@@ -69,6 +69,11 @@ const SKIP_DIRS = new Set([
 const SKIP_PATH_SUBSTR = [
   "packages/core/src/guard/rules.", // rule dictionaries name risky terms on purpose
   "scripts/lint-forbidden.mjs", // this file lists the terms by definition
+  // Governance docs use standard developer terms (e.g. "破壊的操作" = destructive
+  // git ops); they are internal process docs, not outward marketing copy.
+  "CONTRIBUTING.md",
+  "CLAUDE.md",
+  "AGENTS.md",
 ];
 
 /** @param {string} dir */
